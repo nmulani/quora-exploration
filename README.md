@@ -11,8 +11,11 @@ The data comes from a dataset that Quora recently posted on Kaggle. The aim of t
 - __Formatting and Processing Data__
 - __Train Word2Vec Model__
 - __Visualize Word2Vec Model with t-SNE__
-- __Determining Question Similarity Using Word2Vec Scores__
-
+- __Determining Question Similarity Using Word2Vec Scores__ (In Progress)
+    - __Performance on Training Data__
+    - __Performance on Test Data__
+    - __Model based on larger corpus__
+    - __Using doc2vec__
 
 # Load and Preview Data
 
@@ -485,7 +488,7 @@ from mpl_toolkits.axes_grid1.inset_locator import mark_inset
 ```
 
 
-First, we'll need to extract our matrix of word vectors from the word2vec model, and then feed it to the t-SNE algorithm to fit X to a 2-dimensional space. We need to keep this chunk of code separate from the upcoming visualization code, because t-SNE's cost function is non-convext - meaning that the fitting method has different output everytime it runs. If you run this code, chances are your visualizations will look different from mine below.
+First, we'll need to extract our matrix of word vectors from the word2vec model, and then feed it to the t-SNE algorithm to fit X to a 2-dimensional space. We need to keep this chunk of code separate from the upcoming visualization code, because t-SNE's cost function is non-convex - meaning that the fitting method has different output everytime it runs. If you run this code, chances are your visualizations will look different from mine below.
 
 We'll take only the first thousand word vectors from our matrix, so that our visualization is manageable for this iPython notebook.
 
@@ -629,7 +632,9 @@ model.most_similar("years")
 
 
 
-# Determining Question Similarity using Word2Vec Scores
+# Determining Question Similarity using Word2Vec Scores (In Progress)
+
+## Performance on Training Data
 
 One simple way to test similarity between questions would be to sum up the vectors for each word in a question array and to compare the sums for each pair of questions. In order to do this, we'll need to take both sets of tokenized questions, calculate sums (and divide by number of words in an array), and then compare the scores across both sets to compute a level of similarity.
 
@@ -781,3 +786,5 @@ results[15]
     0.6572856118133024
 
 
+
+In this case, we have used a word2vec model trained on a set of questions to identify similarity between questions in that same training data. We still have yet to see how this model will perform on our test set of Quora questions. Currently, the model's performance is adequate but not great. We'll also explore whether this could be improved by training our word2vec model on a larger corpus of text or by using a different method to evaluate question similarity.
