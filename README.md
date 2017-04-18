@@ -3,9 +3,9 @@
 ## Using Word2Vec and t-SNE 
 
 
-Below, I explore and analyze a dataset of Quora questions, with the goal of understanding their meaning well enough to identify duplicate questions. I train word2vec on the dataset to generate vector representations of words found in training data set questions, and then I use t-SNE to visualize some of the high-dimensional data stored in the word2vec model and understand how the word2vec model looks.
+Below, I explore and analyze a dataset of Quora questions, with the goal of understanding their meaning in order to identify duplicate questions. I train word2vec on the dataset to generate vector representations of words found in training data set questions, and then I use t-SNE to visualize some of the high-dimensional data stored in the word2vec model and understand how the word2vec model looks.
 
-The data comes from a dataset that Quora recently posted on Kaggle. The aim of the competition they are hosting is to identify questions which have the same intent, but may be phrased or worded differently. I create a scoring algorithm based on the word2vec model I've created, in order to evaluate the cosine similarity between pairs of questions and predict whether they are duplicates or not.
+The data comes from a dataset that Quora recently posted on Kaggle. The aim of the competition they are hosting is to identify questions which have the same intent, but may be phrased or worded differently. I create a scoring algorithm based on the word2vec model, in order to evaluate the cosine similarity between pairs of questions and predict whether they are duplicates or not.
 
 - __Load and Preview Data__
 - __Formatting and Processing Data__
@@ -636,11 +636,11 @@ model.most_similar("years")
 
 ## Performance on Training Data
 
-One simple way to test similarity between questions would be to sum up the vectors for each word in a question array and to compare the sums for each pair of questions. In order to do this, we'll need to take both sets of tokenized questions, calculate sums (and divide by number of words in an array), and then compare the scores across both sets to compute a level of similarity.
+One simplistic way to test similarity between questions would be to sum up the vectors for each word in a question array and to compare the sums for each pair of questions. In order to do this, we'll need to take both sets of tokenized questions, calculate sums (and divide by number of words in an array in order to normalize), and finally compare the scores across both sets to compute a level of similarity.
 
-In order to do this, we have to make sure that our `scoreList` method, which calculates a vector sum for each question, is able to calculate a score for a question that may have an empty vector (perhpas it is composed entirely of stop words, as is possible since some of the questions in the Quora dataset are computer-generated).
+In order to do this, we have to make sure that our `scoreList` method, which calculates a vector sum for each question, is able to calculate a score for a question that may have an empty vector (perhaps the question is composed entirely of stop words, as is possible since some of the questions in the Quora dataset are computer-generated).
 
-We also have to make sure that our `cosineSimilarity` method, for calculating cosine similarity, is capable of working with vectors of different lengths. To do this, we'll truncate the longer vectors to be the same size as the shorter vectors - effectively treating the elements not shared by the vectors as zero values.
+We also have to make sure that our `cosineSimilarity` method is capable of working with vectors of different lengths. To do this, we'll truncate the longer vectors to be the same size as the shorter vectors - effectively treating the elements not shared by the vectors as zero values.
 
 
 ```python
